@@ -1,0 +1,31 @@
+version: "3"
+services:
+  node:
+    container_name: node
+    build: ./node
+    image: rr/tacpac
+    #Instructs docker compose to use the specified user
+    user: "node"
+    #expects the node.js app is in the node user's home dir in a subfolder called app inside the container
+    working_dir: /home/node/app
+    #sets up any required environment variables
+    environment:
+      - NODE_ENV=development
+      - DEBUG=tacpac,express:*
+    #Maps HOST PORT:CONTAINER PORT
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    #Maps project app dir to app dir in the container
+    volumes:
+      - ./app:/home/node/app
+    #Specifies what command to run to start the express web app
+    command: "nodemon -L"
+  db:
+    container_name: mongo
+    image: mongo:3.4.10
+    environment:
+      - MONGO_INITDB_DATABASE=tacpac
+    volumes:
+      - ./mongo-seed:/docker-entrypoint-initdb.d

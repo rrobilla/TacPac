@@ -1,0 +1,55 @@
+extends layout
+
+
+mixin loadJS
+  - var list = [];
+
+  // data should be id and topicDetails array
+  each datas in details.data
+    each jsonObj in datas
+      - objList.push(jsonObj)
+      each item in jsonObj
+        - list.push(item);
+
+  each item in list
+    script function setTypeLang(s){var type = s;var oput; switch(type){case 'code': oput = "<h5><u>Declaring a variable</u></h5>!{item.variable}<br><br><h5><u>If/Else Statement</u></h5>!{item.ifelse}<br><br><h5><u>For Loop</u></h5>!{item.forloop}<br><br><h5><u>While Loop</u></h5>!{item.whileloop}<br><br><h5><u>Defining a function</u></h5>!{item.deffunc}" ; break; case 'subtopics': oput = "!{item.topic_one_title}<br><a href=!{item.topic_one_url}>!{item.topic_one_url}</a><br><br>!{item.topic_two_title}<br><a href=!{item.topic_two_url}>!{item.topic_two_url}</a>"; break; case 'refs': oput = "!{item.doculinks_title}<br><a href=!{item.doculinks_url}>!{item.doculinks_url}</a><br><br>!{item.otherlinks_title}<br><a href=!{item.otherlinks_url}>!{item.otherlinks_url}</a>"; break;case 'cheats': oput = "!{item.sheet} <br><br><a href=!{item.download}>Click here to download</a>"; break;} ; document.getElementById("contentDiv").innerHTML = oput;}
+
+
+block content
+  if errorMsg
+    .alert.alert-danger= errorMsg
+  - var objList = [];
+  +loadJS
+
+  .container-fluid.py-5
+    .row
+
+      .col-lg-2#subMenu
+        .panel-group
+          .panel.panel-default
+            .panel-heading
+              h4.panel-title
+                a(data-toggle="collapse" href="#collapse1")
+                  Group=`${objList[0]}`
+                    
+            
+              
+
+            .panel-collapse.collapse(id="collapse1")
+              ul.list-group
+                li.list-group-item
+                  a(href="#" onclick="setTypeLang('code');") Commonly used code
+                li.list-group-item
+                  a(href="#" onclick="setTypeLang('subtopics');") Sub Topics
+                li.list-group-item
+                  a(href="#" onclick="setTypeLang('refs');") References
+                li.list-group-item
+                  a(href="#" onclick="setTypeLang('cheats');") Cheat Sheets
+              .panel-footer
+                Footer
+
+        
+      .col-lg-10
+        .container.py-5
+          #contentDiv
+            

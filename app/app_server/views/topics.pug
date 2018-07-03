@@ -1,0 +1,31 @@
+extends layout
+
+
+
+block content
+
+  .row
+    .col-lg-12
+      <br>
+  - var n = 0;
+  if errorMsg
+    .alert.alert-danger= errorMsg
+  each topic in topicNames.data
+    if n % 3 == 0
+      <div class=row>
+        .col-lg-4.colPad25.text-center
+          .card.mt-2
+            .card-body
+              img(src="/images/"+topic.topicImg+"" width="70%" height="70%")
+              a.card-link.btn.btn-primary(href=`/topic/${topic.topicName}`) Details
+    else
+        .col-lg-4.colPad25.text-center
+          .card.mt-2
+            .card-body
+              img(src="/images/"+topic.topicImg+"" width="70%" height="70%")
+              a.card-link.btn.btn-primary(href=`/topic/${topic.topicName}`) Details
+    
+    - n++
+  
+
+  

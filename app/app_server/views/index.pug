@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  .row.rowHeight100
+    .col-lg-12.text-center.colPad30
+      p Welcome to the TacPac !
+  .row.rowHeight150
+    .col-lg-4.colPad25
+      if errorMsg
+        .alert.alert-danger= errorMsg
+      each item in indexContent.data
+        h3=item.whatTitle
+        p=item.whatBody
+    .col-lg-4.colPad25
+      if errorMsg
+        .alert.alert-danger= errorMsg
+      each item in indexContent.data
+        h3=item.howTitle
+        p=item.howBody
+    .col-lg-4.colPad25
+      if errorMsg
+        .alert.alert-danger= errorMsg
+      each item in indexContent.data
+        h3=item.suggestTitle
+        p=item.suggestBody
+
